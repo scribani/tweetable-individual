@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Associations
   has_many :tweets, dependent: :nullify
+  has_many :comments, dependent: :nullify
 
   # Validations
   validates :email, presence: true, uniqueness: true

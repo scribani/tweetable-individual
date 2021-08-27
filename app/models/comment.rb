@@ -1,7 +1,7 @@
-class Tweet < ApplicationRecord
+class Comment < ApplicationRecord
   # Associations
   belongs_to :user
-  has_many :comments, dependent: :destroy
+  belongs_to :tweet
 
   # Validations
   validates :body, presence: true, length: { maximum: 140 }
