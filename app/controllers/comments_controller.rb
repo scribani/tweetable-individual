@@ -8,14 +8,19 @@ class CommentsController < ApplicationController
     redirect_back fallback_location: root_path
   end
 
-  def edit; end
+  def edit
+    authorize @comment
+  end
 
   def update
+    authorize @comment
+
     flash[:alert] = @comment.errors.full_messages.join(', ') unless @comment.update(params[:body])
     redirect_back fallback_location: root_path
   end
 
   def destroy
+    authorize @comment
     @comment.destroy
 
     redirect_back fallback_location: root_path

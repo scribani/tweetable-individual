@@ -23,9 +23,13 @@ class TweetsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @tweet
+  end
 
   def update
+    authorize @tweet
+
     if @tweet.update(params[:body])
       redirect_to @tweet
     else
@@ -35,6 +39,7 @@ class TweetsController < ApplicationController
   end
 
   def destroy
+    authorize @tweet
     @tweet.destroy
 
     redirect_back fallback_location: root_path
