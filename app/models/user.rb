@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Associations
-  has_many :tweets, dependent: :nullify
-  has_many :comments, dependent: :nullify
+  has_many :tweets, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_one_attached :avatar
 
   # Validations

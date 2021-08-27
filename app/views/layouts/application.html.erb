@@ -28,6 +28,10 @@
                   <%= "@#{current_user.username}" %>
                 </li>
 
+                <li class="primary-500">
+                  <%= link_to "Edit Profile", edit_user_registration_path %>
+                </li>
+
                 <li class="btn btn--secondary btn--small">
                   <%= link_to "Log out", destroy_user_session_path, method: :delete %>
                 </li>
