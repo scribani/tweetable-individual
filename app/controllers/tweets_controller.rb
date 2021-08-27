@@ -6,12 +6,17 @@ class TweetsController < ApplicationController
   end
 
   def show
-    @comments = @tweet.comments
+    if @tweet
+      @comments = @tweet.comments
+      render :show
+    else
+      redirect_to root_path
+    end
   end
 
   def create
     @tweet = Tweet.new do |t|
-      t.body = params[:body]
+      t.body = params[:tweet][:body]
       t.user = current_user
     end
 
@@ -30,11 +35,11 @@ class TweetsController < ApplicationController
   def update
     authorize @tweet
 
-    if @tweet.update(params[:body])
+    if @tweet.update(body: params[:tweet][:body])
       redirect_to @tweet
     else
       flash[:alert] = @tweet.errors.full_messages.join(', ')
-      render :edit
+      redirect_to edit_tweet_path(@tweet)
     end
   end
 
@@ -48,6 +53,6 @@ class TweetsController < ApplicationController
   private
 
   def set_tweet
-    @tweet = Tweet.find(params[:id])
+    @tweet = Tweet.find_by(id: params[:id])
   end
 end

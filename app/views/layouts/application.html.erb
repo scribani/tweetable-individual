@@ -25,11 +25,11 @@
                 <li>Thanks for using Tweetable!</li>
 
                 <li class="primary-500">
-                  <%= link_to 'Edit Profile', user_path(current_user) %>
+                  <%= "@#{current_user.username}" %>
                 </li>
 
                 <li class="btn btn--secondary btn--small">
-                  <%= link_to "Log out", destroy_user_session, method: :delete %>
+                  <%= link_to "Log out", destroy_user_session_path, method: :delete %>
                 </li>
               </ul>
             </div>

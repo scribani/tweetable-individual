@@ -1,0 +1,9 @@
+<h2 class="heading--sm text-center">Home</h2>
+
+<% if user_signed_in? %>
+  <%= render "/shared/new-tweet", model: Tweet.new, reply_to: nil %>
+<% end%>
+
+<% @tweets.each do |tweet| %>
+  <%= render "/shared/tweet-card", model: tweet, show: tweet %>
+<% end %>

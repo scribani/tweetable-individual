@@ -1,0 +1,11 @@
+<%= form_with model: model do |form| %>
+  <div class="input">
+    <div class="tweet__container">
+      <%= form.hidden_field :tweet_id, value: reply_to.id unless reply_to.nil? %>
+
+      <%= form.text_area :body, class: "tweet__content", placeholder: "Remember to think before write...", required: true %>
+
+      <%= form.submit model.model_name.name, class: "btn btn--primary btn--small" %>
+    </div>
+  </div>
+<% end %>

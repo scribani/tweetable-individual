@@ -1,0 +1,15 @@
+<h2 class="heading--sm text-center">Tweet Detail</h2>
+
+<%= render "/shared/tweet-card", model: @tweet, show: @tweet %>
+
+<div class="separator"></div>
+
+<% if current_user %>
+  <%= render "/shared/new-tweet", model: Comment.new, reply_to: @tweet %>
+<% end %>
+
+<% @comments.each do |comment| %>
+  <%= render "/shared/tweet-card", model: comment, show: "#" %>
+<% end %>
+
+<%= link_to "Back to home", root_path, class: "primary-500 text-center" %>

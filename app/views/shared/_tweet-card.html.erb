@@ -1,0 +1,52 @@
+<div class="tweet-card">
+  <%= link_to show do %>
+    <div class="flex">
+      <% if model.user.avatar.attached? %>
+        <%= image_tag model.user.avatar, class: "tweet__img" %>
+      <% else %>
+        <%= image_tag "/images/default_avatar.png", class: "tweet__img" %>
+      <% end %>
+
+      <div class="flex flex-column">
+        <p>
+          <span class="bold"><%= model.user.name %></span> 
+          <span class="primary-300"><%= "@#{ model.user.username }" %>
+        </p>
+        <p class="content--small gray-300"><%= time_ago_in_words(model.updated_at) %> ago</p>
+      </div>
+    </div>
+
+    <p>
+      <%= model.body %>
+    </p>
+  <% end %>
+
+  <div class="flex space-between">
+    <div class="flex gap-16">
+      <%= link_to(
+        image_tag("/images/icons/trash.svg", :alt => "delete"),
+        model,
+        method: :delete,
+        data: { confirm: "Do you want to delete it?" },
+        class: "gray-300"
+      ) if policy(model).destroy? %>
+
+      <% model_name = model.model_name.name %>
+      <% edit_path = model_name == "Tweet" ? "/tweets/#{model.id}/edit" : "/comments/#{model.id}/edit" %>
+      <%= link_to(
+        image_tag("/images/icons/edit.svg"),
+        edit_path,
+        class: "gray-300"
+        ) if policy(model).update? %>
+    </div>
+
+    <% if model_name == "Tweet" %>
+      <%= link_to model do %>
+        <div class="flex gap-8 align-center">
+          <%= image_tag "/images/icons/reply.svg", class: "gray-300" %>
+          <p class="gray-300"><%= model.comments_count %></p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

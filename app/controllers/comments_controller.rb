@@ -14,8 +14,9 @@ class CommentsController < ApplicationController
 
   def update
     authorize @comment
+    updated = @comment.update(params[:comment][:body])
 
-    flash[:alert] = @comment.errors.full_messages.join(', ') unless @comment.update(params[:body])
+    flash[:alert] = @comment.errors.full_messages.join(', ') unless updated
     redirect_back fallback_location: root_path
   end
 
@@ -34,9 +35,9 @@ class CommentsController < ApplicationController
 
   def new_comment
     Comment.new do |c|
-      c.body = params[:body]
+      c.body = params[:comment][:body]
       c.user = current_user
-      c.tweet = params[:tweet_id]
+      c.tweet_id = params[:comment][:tweet_id].to_i
     end
   end
 end
