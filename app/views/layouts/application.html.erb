@@ -5,14 +5,75 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= stylesheet_link_tag 'style.css' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="container m-auto">
+      <header class="navbar align-center">
+        <%= link_to image_tag("/images/tweetable_logo.png"), root_path, class: "navbar__logo" %>
 
-    <%= yield %>
+        <input type="checkbox" id="open" class="menu-checkbox">
+        <label for="open" class="menu-open"></label>
+
+        <% if user_signed_in? %>
+          <nav class="menu absolute">
+            <div class="container">
+              <ul class="menu--content content--sm">  
+                <li>Thanks for using Tweetable!</li>
+
+                <li class="primary-500">
+                  <%= link_to 'Edit Profile', user_path(current_user) %>
+                </li>
+
+                <li class="btn btn--secondary btn--small">
+                  <%= link_to "Log out", destroy_user_session, method: :delete %>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        <% else %>
+          <nav class="menu absolute">
+            <div class="container">
+              <ul class="menu--content content--sm">
+                <li>Login to start the tweeting madness!</li>
+
+                <li class="btn btn--primary btn--small">
+                  <%= link_to 'Login', new_user_session_path %>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        <% end %>
+      </header>
+
+      <div class="absolute">
+        <% flash.each do |type, message|%>
+          <div class="flex gap-16 flash-card flash-card--fade_away">
+            <%= image_tag "/images/icons/#{type}.svg" %>
+            <div class="text-left">
+              <p class="heading heading--xs"><%=type.to_s.capitalize%></p>
+              <p class="content--lg"><%=message%></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%= yield %>
+
+      <footer>
+        <p class="footer--txt content--sm">© 2021 - Codeable Tweetable</p>
+        <p class="content--sm">Build with <span class="footer--heart">♥</span> by</p>
+
+        <div class="footer--social-container content--xs">
+          <div class="footer--social-name">
+            <%= image_tag "/images/icons/linkedin.svg" %>
+            <p> Andrés Scribani</p>
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
