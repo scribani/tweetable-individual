@@ -22,4 +22,18 @@ puts "Seeding users..."
   new_user = User.new(user_data)
   puts "User not created. Errors: #{new_user.errors.full_messages}" unless new_user.save
 end
+
+# Create tweets for each user using random data
+puts "Seeding tweets..."
+users = User.all
+users.each do |user|
+  rand(3..7).times do
+    tweet_data = {
+      body: Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 2),
+      user: user
+    }
+    new_tweet = Tweet.new(tweet_data)
+    puts "Tweet not created. Errors: #{new_tweet.errors.full_messages}" unless new_tweet.save
+  end
+end
 puts "Finish seeding"
