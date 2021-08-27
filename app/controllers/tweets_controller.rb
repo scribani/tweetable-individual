@@ -1,10 +1,11 @@
 class TweetsController < ApplicationController
+  before_action :set_tweet, only: %i[show edit update destroy]
+
   def index
     @tweets = Tweet.all
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
     @comments = @tweet.comments
   end
 
@@ -17,28 +18,31 @@ class TweetsController < ApplicationController
     if @tweet.save
       redirect_to @tweet
     else
+      flash[:alert] = @tweet.errors.full_messages.join(', ')
       redirect_back fallback_location: root_path
     end
   end
 
-  def edit
-    @tweet = Tweet.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @tweet = Tweet.find(params[:id])
-
-    if @tweet.update(tweet_params)
+    if @tweet.update(params[:body])
       redirect_to @tweet
     else
+      flash[:alert] = @tweet.errors.full_messages.join(', ')
       render :edit
     end
   end
 
   def destroy
-    @tweet = Tweet.find(params[:id])
     @tweet.destroy
 
     redirect_back fallback_location: root_path
+  end
+
+  private
+
+  def set_tweet
+    @tweet = Tweet.find(params[:id])
   end
 end

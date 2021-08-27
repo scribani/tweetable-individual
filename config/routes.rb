@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :tweets, except: :new
-  resources :comments, except: %i[index new]
+  resources :comments, except: %i[index show new]
 end
