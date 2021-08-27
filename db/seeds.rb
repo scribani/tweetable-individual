@@ -8,6 +8,7 @@
 require 'faker'
 
 puts "Start seeding"
+Tweet.destroy_all
 User.destroy_all
 
 # Create 7 users using random data
@@ -34,6 +35,22 @@ users.each do |user|
     }
     new_tweet = Tweet.new(tweet_data)
     puts "Tweet not created. Errors: #{new_tweet.errors.full_messages}" unless new_tweet.save
+  end
+end
+
+# Create comments for each user using random data
+puts "Seeding comments..."
+users = User.all
+tweets = Tweet.all
+users.each do |user|
+  rand(3..7).times do
+    comment_data = {
+      body: Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 2),
+      user: user,
+      tweet: tweets.sample
+    }
+    new_comment = Comment.new(comment_data)
+    puts "Comment not created. Errors: #{new_comment.errors.full_messages}" unless new_comment.save
   end
 end
 puts "Finish seeding"
