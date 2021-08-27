@@ -14,10 +14,10 @@ class CommentsController < ApplicationController
 
   def update
     authorize @comment
-    updated = @comment.update(params[:comment][:body])
+    updated = @comment.update(body: params[:comment][:body])
 
     flash[:alert] = @comment.errors.full_messages.join(', ') unless updated
-    redirect_back fallback_location: root_path
+    redirect_to @comment.tweet
   end
 
   def destroy
