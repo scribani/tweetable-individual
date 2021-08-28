@@ -4,7 +4,7 @@
       <% if model.user.avatar.attached? %>
         <%= image_tag model.user.avatar, class: "tweet__img" %>
       <% else %>
-        <%= image_tag "/images/default_avatar.png", class: "tweet__img" %>
+        <%= image_tag "default_avatar.png", class: "tweet__img" %>
       <% end %>
 
       <div class="flex flex-column">

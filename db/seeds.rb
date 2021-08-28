@@ -13,7 +13,7 @@ User.destroy_all
 
 # Create 7 users using random data
 puts "Seeding users..."
-7.times do
+7.times do |number|
   user_data = {
     username: Faker::Internet.unique.username,
     email: Faker::Internet.unique.safe_email,
@@ -21,6 +21,11 @@ puts "Seeding users..."
     password: Faker::Internet.password(min_length: 6)
   }
   new_user = User.new(user_data)
+
+  io_path = (number + 1) > 5 ? "app/assets/images/default_avatar.png" : "app/assets/images/avatar#{number + 1}.png"
+  filename = io_path.split("/").last
+  new_user.avatar.attach(io: File.open(io_path), filename: filename)
+
   puts "User not created. Errors: #{new_user.errors.full_messages}" unless new_user.save
 end
 
